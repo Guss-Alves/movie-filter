@@ -5,17 +5,16 @@ const Search = () => {
 
     const [input, setInput] = useState("");
 
-    // console.log(input);
-
     return (
         <div>
-            <input type="text" className="searchInput" placeholder='Search here for a title or director' onChange={(e) => setInput(e.target.value)} />
+            <input type="text" className="searchInput" placeholder='Search here for a title or director' onChange={(e) => setInput(e.target.value.toLowerCase())} />
             <div className="filterBy">
-                <select name="Choose category" id="dropDown" className='mt-4'>
+                <label htmlFor="category-names">Filter by category:</label>
+                <select onChange={(e) => setInput(e.target.value)} name="Choose category" id="dropDown" className='mt-4 ms-3'>
                     {
                         data.map((item) => {
                             return (
-                                <option key={item.id} value={item.category}>{item.category}</option>
+                                <option key={item.id} value={item.category.toLowerCase()} >{item.category}</option>
                             )
                         })
                     }
@@ -37,7 +36,8 @@ const Search = () => {
                                 return input.toLowerCase() === "" ?
                                     item :
                                     item.title.toLowerCase().includes(input) ||
-                                    item.director.toLowerCase().includes(input)
+                                    item.director.toLowerCase().includes(input) ||
+                                    item.category.toLowerCase().includes(input);
                             }).map((item) => {
                                 return (
                                     <tr key={item.id}>
